@@ -40,6 +40,35 @@ router.post("/", requireAuth(), async (req, res) => {
     }
   });
 
+  router.patch("/:id", requireAuth(), async (req, res) => {
+    const { title, code, language, isPublic } = req.body;
+    
+    try {
+      const snippet = await Snippet.findById(req.params.id);
+      
+      if (!snippet) {
+        return res.status(404).json({ error: "Snippet not found" });
+      }
+  
+      if (snippet.userId.toString() !== req.auth.userId) {
+        return res.status(403).json({ error: "Unauthorized" });
+      }
+  
+      // Update fields if provided
+      if (title) snippet.title = title;
+      if (code) snippet.code = code;
+      if (language) snippet.language = language;
+      if (isPublic !== undefined) snippet.isPublic = isPublic;
+  
+      await snippet.save();
+      res.json(snippet);
+      
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+
   router.delete("/:id", requireAuth(), async (req, res) => {
     try {
       const snippet = await Snippet.findById(req.params.id);
