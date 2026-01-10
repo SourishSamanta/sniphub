@@ -1,6 +1,9 @@
 const SnippetCard = ({ title, description, showActions = false, onEdit, onDelete }) => {
     return (
-      <div className="bg-gray-900 p-4 rounded-lg border border-gray-700 hover:bg-gray-800 transition relative">
+      <div className=" bg-white/5 backdrop-blur-xl border border-white/10
+hover:shadow-[0_0_30px_rgba(56,189,248,0.15)]
+hover:scale-[1.02] transition-all
+ p-4 rounded-lg  hover:bg-gray-800 transition relative">
         <h3 className="font-semibold text-lg text-white">{title}</h3>
         <p className="text-gray-400 text-sm">{description}</p>
   
